@@ -41,8 +41,8 @@ bool isHexaDecimal(const char *num){
 	return  true;
 }
 
-int binaryToDecimal(const char *num){
-	int decimal=0;
+long int binaryToDecimal(const char *num){
+	long int decimal=0;
 	int len=strlen(num);
 
 	for(int i=len-1;i>=0;i--){
@@ -53,8 +53,8 @@ int binaryToDecimal(const char *num){
 	return decimal;
 }
 
-int octalToDecimal(const char *num){
-	int decimal=0;
+long int octalToDecimal(const char *num){
+	long int decimal=0;
 	int len=strlen(num);
 
 	for(int i=len-1;i>=0;i--){
@@ -65,10 +65,10 @@ int octalToDecimal(const char *num){
 	return decimal;
 }
 
-int hexaDecimalToDecimal(const char *num){
-	int decimal=0;
+long int hexaDecimalToDecimal(const char *num){
+	long int decimal=0;
 	int len=strlen(num);
-
+	
 	for(int i=len-1;i>=0;i--){
 		int digit=0;
 		if(num[i]>='0' && num[i]<='9'){
@@ -82,10 +82,11 @@ int hexaDecimalToDecimal(const char *num){
 		}
 		decimal+=digit * pow(16,len-1-i);
 	}
+	return decimal;
 
 }
 
-void decimalToBinary(int decimal){
+void decimalToBinary(long int decimal){
 	if(decimal == 0){
 	       printf("0");
        		return;
@@ -104,7 +105,7 @@ void decimalToBinary(int decimal){
 
 }
 
-void decimalToOctal(int decimal){
+void decimalToOctal(long int decimal){
 	if(decimal == 0){
 		printf("0");
 		return;
@@ -122,7 +123,7 @@ void decimalToOctal(int decimal){
 	}
 }
 
-void decimalToHexaDecimal(int decimal){
+void decimalToHexaDecimal(long int decimal){
 	if(decimal == 0){
 		printf("0");
 		return;
@@ -148,33 +149,93 @@ void decimalToHexaDecimal(int decimal){
 }
 
 void binaryToOctal(const char *num){
-	int decimal=binaryToDecimal(num);
+	long int decimal=binaryToDecimal(num);
 	decimalToOctal(decimal);
 }
 
 void binaryToHexaDecimal(const char *num){
-	int decimal=binaryToDecimal(num);
+	long int decimal=binaryToDecimal(num);
 	decimalToHexaDecimal(decimal);
 }
 
 void octalToBinary(const char *num){
-	int decimal=octalToDecimal(num);
+	long int decimal=octalToDecimal(num);
 	decimalToBinary(decimal);
 }
 
 void octalToHexaDecimal(const char *num){
-	int decimal=octalToDecimal(num);
+	long int decimal=octalToDecimal(num);
 	decimalToHexaDecimal(decimal);
 }
 
-void hexaDecimalToBinary(const char *num){
-	int decimal=hexaDecimalToDecimal(num);
-	decimalToBinary(decimal);
+void hexaDecimalToOctal(const char *num){
+	long int decimal=hexaDecimalToDecimal(num);
+	decimalToOctal(decimal);
 }
 
-void hexaDecimalToOctal(const char *num){
-	int decimal=hexaDecimalToDecimal(num);
-	decimalToOctal(decimal);
+void hexaDecimalToBinary(const char *num){
+	int i=0;
+	int len = strlen(num);
+	for(int i=0;i<len;i++){
+		switch(num[i]){
+			case '0':
+				printf("0000");
+			       	break;
+			case '1':
+				printf("0001");
+				break;
+			case '2':
+				printf("0010");
+				break;
+			case '3':
+				printf("0011");
+				break;
+			case '4':
+				printf("0100");
+				break;
+			case '5':
+				printf("0101");
+				break;
+			case '6':
+				printf("0110");
+				break;
+			case '7':
+				printf("0111");
+				break;
+			case '8':
+				printf("1000");
+				break;
+			case '9':
+				printf("1001");
+				break;
+			case 'A':
+			case 'a':
+				printf("1010");
+				break;
+			case 'B':
+			case 'b':
+				printf("1011");
+				break;
+			case 'C':
+			case 'c':
+				printf("1100");
+				break;
+			case 'D':
+			case 'd':
+				printf("1101");
+				break;
+			case 'E':
+			case 'e':
+				printf("1110");
+				break;
+			case 'F':
+			case 'f':
+				printf("1111");
+				break;
+			default:
+				printf("\nInvalid hexa digit");
+		}
+	}
 }
 int main(){
 	int flag=1;
@@ -202,7 +263,7 @@ int main(){
 
 		printf("\nENTER YOUR CHOICE: ");
 		scanf("%d",&op);
-		int decimal;
+		long int decimal;
 		char num[100];
 		switch(op){
 			case 1:
@@ -211,7 +272,7 @@ int main(){
 				scanf("%s",num);
 				if(isBinary(num)){
 					printf("Decimal equivalent: ");
-					printf("%d",binaryToDecimal(num));
+					printf("%ld",binaryToDecimal(num));
 				}
 				else{
 					printf("\nInvalid Binary Number\n");
@@ -245,7 +306,7 @@ int main(){
 			case 4:
 				printf("\n**DECIMAL TO BINARY**\n");
 				printf("\nEnter the Number in Decimal form(0-9): ");
-				scanf("%d",&decimal);
+				scanf("%ld",&decimal);
 				if(isDecimal(decimal)){
 					printf("Binary equivalent: ");
 					decimalToBinary(decimal);
@@ -257,7 +318,7 @@ int main(){
 			case 5: 
 				printf("\n**DECIMAL TO OCTAL**\n");
 				printf("\nEnter the Number in Decimal form(0-9): ");
-				scanf("%d",&decimal);
+				scanf("%ld",&decimal);
 				if(isDecimal(decimal)){
 					printf("Octal equivalent: ");
 					decimalToOctal(decimal);
@@ -269,7 +330,7 @@ int main(){
 			case 6:
 				printf("\n**DECIMAL TO HEXADECIMAL**\n");
 				printf("\nEnter the Number in Decimal form(0-9): ");
-				scanf("%d",&decimal);
+				scanf("%ld",&decimal);
 				if(isDecimal(decimal)){
 					printf("Hexadecimal equivalent: ");
 					decimalToHexaDecimal(decimal);
@@ -296,7 +357,7 @@ int main(){
 				scanf("%s",num);
 				if(isOctal(num)){
 					printf("Decimal  equivalent: ");
-					printf("%d",octalToDecimal(num));
+					printf("%ld",octalToDecimal(num));
 				}
 				else{
 					printf("\nInvalid Octal Number\n");
@@ -346,7 +407,7 @@ int main(){
 				scanf("%s",num);
 				if(isHexaDecimal(num)){
 					printf("Decimal  equivalent: ");
-					printf("%d",hexaDecimalToDecimal(num));
+					printf("%ld",hexaDecimalToDecimal(num));
 				}
 				else{
 					printf("\nInvalid HexaDecimal Number\n");
@@ -356,7 +417,7 @@ int main(){
 				printf("\nINVALID NUMBER\n");
 				break;
 		}
-		printf("\nDO YOY WANT TO CONTINUE =(1/0) :\n");
+		printf("\nDO YOU WANT TO CONTINUE =(1/0) :\n");
 		scanf("%d",&flag);
 	}
 
